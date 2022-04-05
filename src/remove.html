@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="header" id="myHeader">
+        <a href="/index.html">Home</a>
+        <a href="/add.html">Add</a>
+        <a href="/remove.html">Remove</a>
+    </div>
+    <div class="content">
+        <h1>Remove Recipes</h1>
+        <form id="form">
+            <input type="text" placeholder="Title" id="title" required>
+            <button>Remove</button>
+        </form>
+    </div>
+</body>
+<script>
+    const title = document.getElementById("title")
+    const form = document.getElementById("form")
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+       fetch(`/removeconfig?json=${title.value}`).then((response) => {
+           response.json().then((data) => {
+               if (data.error) {
+                    console.log(data.error)
+               } else {
+                    console.log(data)
+               }
+           })
+       })
+    })
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        background-color: bisque;
+        font-family: 'Montserrat', sans-serif;
+    }
+    a {
+        text-decoration: none;
+        color: #ff4000;
+        font-size: 1.6em;
+        font-weight: bold;
+        padding: 20px;
+    }
+    .header {
+        text-align: center;
+        padding: 10px 16px;
+        background: rgb(255, 204, 142);
+        color: #ff4000;
+    }
+
+    .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    .sticky+.content {
+        padding-top: 102px;
+    }
+    h1 {
+        width: 100%;
+        text-align: center;
+        color: red;
+        font-size: 4em;
+    }
+    form {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        margin: 20px;
+    }
+
+    #recipes {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #recipes input {
+        width: 50%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        padding: 12px 20px 12px 40px;
+        transition: width 0.4s ease-in-out;
+    }
+
+    form {
+        padding-bottom: 20px;
+    }
+
+    form input {
+        width: 300px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url(https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg);
+        background-position: 10px 10px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        transition: width 0.4s ease-in-out;
+    }
+    input:focus {
+        width: 60%;
+    }
+    button {
+        width: 100px;
+        height: 45px;
+        border: none;
+        border-radius: 4px;
+        background-color: #ff4000;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+</html>

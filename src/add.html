@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <div class="header" id="myHeader">
+        <a href="/index.html">Home</a>
+        <a href="/add.html">Add</a>
+        <a href="/remove.html">Remove</a>
+    </div>
+    <div class="content">
+        <h1>Add Recipes</h1>
+        <form id="add">
+            <input type="text" placeholder="Title" id="title" required>
+            <input type="text" placeholder="Ingredients separated by a comma" id="ingredients" required>
+            <input type="text" placeholder="Method" id="method">
+            <input type="text" placeholder="Source Website" id="source">
+            <button>Add</button>
+        </form>
+        <form id="form">
+            <button>Get random recipe</button>
+        </form>
+    </div>
+</body>
+<script>
+    const title = document.getElementById("title")
+    const method = document.getElementById("method")
+    const ingredients = document.getElementById("ingredients")
+    const source = document.getElementById("source")
+    const form = document.getElementById("form")
+    const add = document.getElementById("add")
+    let image = ""
+    add.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        let json = `{"title": "${title.value}","img" :"${image}","ingredients" :"${ingredients.value}","method": "${method.value}","source": "${source.value}"}`
+        let obj = encodeURI(json)
+        fetch(`/addconfig?json=${obj}&title=${title.value}`).then((response) => {
+            response.json().then((data) => {
+                if (data.error) {
+                    console.log(data.error)
+                } else {
+                    if (data.error) {
+                        console.log(data.error)
+                    } else {
+                        console.log(data)
+                    }
+                }
+            })
+        })
+    })
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        fetch("https://www.themealdb.com/api/json/v1/1/random.php").then((response) => {
+            response.json().then((data) => {
+                if (data.error) {
+                    console.log(data.error)
+                } else {
+                    let ingredientsList = data.meals[0].strIngredient1 + " " + data.meals[0].strMeasure1 + ", " + data.meals[0].strIngredient2 + " " + data.meals[0].strMeasure2 + ", " + data.meals[0].strIngredient3 + " " + data.meals[0].strMeasure3 + ", " + data.meals[0].strIngredient4 + " " + data.meals[0].strMeasure4 + ", " + data.meals[0].strIngredient5 + " " + data.meals[0].strMeasure5 + ", " + data.meals[0].strIngredient6 + " " + data.meals[0].strMeasure7 + ", " + data.meals[0].strIngredient8 + " " + data.meals[0].strMeasure8 + ", " + data.meals[0].strIngredient9 + " " + data.meals[0].strMeasure9 + ", " + data.meals[0].strIngredient10 + " " + data.meals[0].strMeasure10 + ", " + data.meals[0].strIngredient11 + " " + data.meals[0].strMeasure11 + ", " + data.meals[0].strIngredient12 + " " + data.meals[0].strMeasure12 + ", " + data.meals[0].strIngredient13 + " " + data.meals[0].strMeasure13 + ", " + data.meals[0].strIngredient14 + " " + data.meals[0].strMeasure14 + ", " + data.meals[0].strIngredient15 + " " + data.meals[0].strMeasure15 + ", " + data.meals[0].strIngredient16 + " " + data.meals[0].strMeasure16 + ", " + data.meals[0].strIngredient17 + " " + data.meals[0].strMeasure17 + ", " + data.meals[0].strIngredient18 + " " + data.meals[0].strMeasure18 + ", " + data.meals[0].strIngredient19 + " " + data.meals[0].strMeasure19 + ", " + data.meals[0].strIngredient20 + " " + data.meals[0].strMeasure20
+                    while (ingredientsList.includes("null")) {
+                        ingredientsList = ingredientsList.replace("null", "")
+                    }
+                    while (ingredientsList.includes(",  ")) {
+                        ingredientsList = ingredientsList.replace(",  ", "")
+                    }
+                    image = data.meals[0].strMealThumb
+                    title.value = data.meals[0].strMeal
+                    ingredients.value = ingredientsList.trim()
+                    source.value = data.meals[0].strSource
+                    method.value = data.meals[0].strInstructions
+                }
+            })
+        })
+    })
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background-color: bisque;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    a {
+        text-decoration: none;
+        color: #ff4000;
+        font-size: 1.6em;
+        font-weight: bold;
+        padding: 20px;
+    }
+
+    .header {
+        text-align: center;
+        padding: 10px 16px;
+        background: rgb(255, 204, 142);
+        color: #ff4000;
+    }
+
+    .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    .sticky+.content {
+        padding-top: 102px;
+    }
+
+    h1 {
+        width: 100%;
+        text-align: center;
+        color: red;
+        font-size: 4em;
+    }
+
+    form {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button {
+        margin: 20px;
+    }
+
+    form {
+        padding-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    form input {
+        width: 70%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url(https://upload.wikimedia.org/wikipedia/commons/0/0b/Search_Icon.svg);
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        transition: width 0.4s ease-in-out;
+    }
+
+    button {
+        width: 100px;
+        height: 45px;
+        border: none;
+        border-radius: 4px;
+        background-color: #ff4000;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+
+</html>
