@@ -146,6 +146,9 @@ public class RecipeManager {
                 if (file.exists()) {
                 } else if (!file.exists()) {
                     file.createNewFile();
+                    FileWriter f2 = new FileWriter(FileFolder + "\\recipes.json", false);
+                    f2.write("{}");
+                    f2.close();
                 }
                 Scanner content = new Scanner(file);
                 String list = "";
@@ -181,6 +184,9 @@ public class RecipeManager {
                 if (file.exists()) {
                 } else if (!file.exists()) {
                     file.createNewFile();
+                    FileWriter f2 = new FileWriter(FileFolder + "\\recipes.json", false);
+                    f2.write("{}");
+                    f2.close();
                 }
                 Scanner content = new Scanner(file);
                 String list = "";
@@ -226,6 +232,9 @@ public class RecipeManager {
                 if (file.exists()) {
                 } else if (!file.exists()) {
                     file.createNewFile();
+                    FileWriter f2 = new FileWriter(FileFolder + "\\recipes.json", false);
+                    f2.write("{}");
+                    f2.close();
                 }
                 Scanner content = new Scanner(file);
                 String list = "";
